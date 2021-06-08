@@ -8,6 +8,8 @@ authors = ["matheus <matheus.tessaroli@olist.com>"]
 python = "^3.9"
 Django = "^3.2.4"
 psycopg2-binary = "^2.8.6"
+pre-commit = "^2.13.0"
+safety = "^1.10.3"
 
 [tool.poetry.dev-dependencies]
 flake8 = "^3.9.2"

@@ -28,6 +28,7 @@ Temporary Items
 # Byte-compiled / optimized / DLL files
 __pycache__/
 *.py[cod]
+__pycache__
 
 # C extensions
 *.so
@@ -84,3 +85,4 @@ target/
 *.pyc
 __pycache__/
 local_settings.py
+**/migrations/*

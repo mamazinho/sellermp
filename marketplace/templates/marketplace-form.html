@@ -1,0 +1,41 @@
+{% extends 'base.html' %}
+
+{% block title %}Marketplace{% endblock %}
+
+{% block content %}
+    <h2>Marketplace - {{id}}</h2>
+    <form method="post">
+            {% csrf_token %}
+            {{ form |linebreaks}}
+            <input type="submit" value="Submit">
+    </form>
+
+    {% if id %}
+        <a href="{% url 'settings' action='new' %}"><button>Add Setting</button></a>
+        <table class="table">
+            <thead>
+                <tr>
+                    <th scope="col">#</th>
+                    <th scope="col">Marketplace</th>
+                    <th scope="col">API</th>
+                    <th scope="col">ENDPOINT</th>
+                    <th scope="col">SECRET-KEY</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for setting in settings %}
+                <tr>
+                    <td>{{setting.id}}</td>
+                    <td>{{setting.marketplace}}</td>
+                    <td>{{setting.api}}</td>
+                    <td>{{setting.endpont}}</td>
+                    <td>{{setting.secret_key}}</td>
+                    <td><a href="{% url 'settings' action='update' id=setting.id %}">Update</a></td>
+                    <td><a href="{% url 'settings' action='delete' id=setting.id %}">Delete</a></td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+
+    {% endif %}
+{% endblock %}

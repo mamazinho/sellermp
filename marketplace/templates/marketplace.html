@@ -1,0 +1,30 @@
+{% extends 'base.html' %}
+
+{% block title %}Marketplace{% endblock %}
+
+{% block content %}
+    <h2>Marketplaces</h2>
+    <table class="table">
+    <thead>
+        <tr>
+        <th scope="col">#</th>
+        <th scope="col">Name</th>
+        <th scope="col">Website</th>
+        <th scope="col">Active</th>
+        </tr>
+    </thead>
+        <tbody>
+            {% for item in marketplaces %}
+                <tr>
+                    <td>{{item.id}}</td>
+                    <td>{{item.name}}</td>
+                    <td>{{item.website}}</td>
+                    <td>{{item.active}}</td>
+                    <td><a href="{% url 'marketplace' action='update' id=item.id %}?marketplace={{item.id}}">Update</a></td>
+                    <td><a href="{% url 'marketplace' action='delete' id=item.id %}">Delete</a></td>
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+    <a href="/marketplaces/new" class="link-primary">New Marketplace</a>
+{% endblock %}

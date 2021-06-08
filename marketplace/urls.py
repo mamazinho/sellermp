@@ -1,6 +1,11 @@
 from django.urls import path
-from marketplace.views import MarketPlace
+
+from marketplace.views import Marketplace, MarketplaceSettings
 
 urlpatterns = [
-    path('', MarketPlace.as_view(), name='marketplace'),
+    path("", Marketplace.as_view(), name="marketplace"),
+    path("<action>", Marketplace.as_view(), name="marketplace"),
+    path("<action>/<id>", Marketplace.as_view(), name="marketplace"),
+    path("settings/<action>/", MarketplaceSettings.as_view(), name="settings"),
+    path("settings/<action>/<id>", MarketplaceSettings.as_view(), name="settings"),
 ]
