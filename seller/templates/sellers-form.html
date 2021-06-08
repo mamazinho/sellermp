@@ -1,6 +1,6 @@
 {% extends 'base.html' %}
 
-{% block title %}Formulário{% endblock %}
+{% block title %}Sellers Form{% endblock %}
 
 {% block content %}
 
@@ -27,6 +27,35 @@
             name="bank_agency" 
             value="{% if seller and seller.bank_agency %}{{seller.bank_agency}}{% endif %}"><br />
         
-        <input type="submit" form="seller-form">
+        <input type="submit" form="seller-form"><br/><br/>
     </form>
+
+    {% if seller %}
+        <table class="table">
+            <thead>
+                <tr>
+                    <th scope="col">Id</th>
+                    <th scope="col">Address</th>
+                    <th scope="col">Email</th>
+                    <th scope="col">Phone Number</th>
+                    <th scope="col">Update</th>
+                    <th scope="col">Delete</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for detail in details %}
+                <tr>
+                    <td>{{detail.id}}</td>
+                    <td>{{detail.address}}</td>
+                    <td>{{detail.responsible_email}}</td>
+                    <td>{{detail.phone_number}}</td>
+                    <td><a href="{% url 'seller-details' action='update' id=detail.id %}?seller_id={{seller.id}}">Update</a></td>
+                    <td><a href="{% url 'seller-details' action='delete' id=detail.id %}?seller_id={{seller.id}}">Delete</a></td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+        <a href="{% url 'seller-details' action='new' %}?seller_id={{seller.id}}"><button>Add</button></a>
+    {% endif %}
+
 {% endblock %}
