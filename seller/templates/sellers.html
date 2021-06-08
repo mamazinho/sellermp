@@ -8,35 +8,36 @@
     </div>
 
     <a href="{% url 'sellers' action='new' %}"><button>Criar seller</button></a>
-    <table>
-        <thead>
-            <th>
+
+    <div class="table-responsive">
+        <table class="table">
+            <thead>
                 <tr>
-                    <td>Id</td>
-                    <td>CNPJ</td>
-                    <td>Company Name</td>
-                    <td>Bank Name</td>
-                    <td>Bank Account</td>
-                    <td>Bank Agency</td>
-                    <td>Update</td>
-                    <td>Delete</td>
+                    <th scope="col">Id</th>
+                    <th scope="col">CNPJ</th>
+                    <th scope="col">Company Name</th>
+                    <th scope="col">Bank Name</th>
+                    <th scope="col">Bank Account</th>
+                    <th scope="col">Bank Agency</th>
+                    <th scope="col">Update/Detail</th>
+                    <th scope="col">Delete</th>
                 </tr>
-            </th>
-        </thead>
-        <tbody>
-            {% for seller in sellers %}
-                <tr>
-                    <td>{{ seller.id }}</td>
-                    <td>{{ seller.cnpj }}</td>
-                    <td>{{ seller.company_name }}</td>
-                    <td>{{ seller.bank_name }}</td>
-                    <td>{{ seller.bank_account }}</td>
-                    <td>{{ seller.bank_agency }}</td>
-                    <td><a href="{% url 'sellers' action='update' id=seller.id%}">Update</a></td>
-                    <td><a href="{% url 'sellers' action='delete' id=seller.id %}">Delete</a></td>
-                </tr>
-            {% endfor %}
-        </tbody>
-    </table>
+            </thead>
+            <tbody>
+                {% for seller in sellers %}
+                    <tr>
+                        <td scope="row">{{ seller.id }}</td>
+                        <td scope="row">{{ seller.cnpj }}</td>
+                        <td scope="row">{{ seller.company_name }}</td>
+                        <td scope="row">{{ seller.bank_name }}</td>
+                        <td scope="row">{{ seller.bank_account }}</td>
+                        <td scope="row">{{ seller.bank_agency }}</td>
+                        <td scope="row"><a href="{% url 'sellers' action='update' id=seller.id%}">Update/Detail</a></td>
+                        <td scope="row"><a href="{% url 'sellers' action='delete' id=seller.id %}">Delete</a></td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
 {% endblock %}
     
