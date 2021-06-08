@@ -6,5 +6,37 @@
     <div class="container">
         <div class="row">Sellers Page</div>
     </div>
+
+    <a href="{% url 'sellers' action='new' %}"><button>Criar seller</button></a>
+    <table>
+        <thead>
+            <th>
+                <tr>
+                    <td>Id</td>
+                    <td>CNPJ</td>
+                    <td>Company Name</td>
+                    <td>Bank Name</td>
+                    <td>Bank Account</td>
+                    <td>Bank Agency</td>
+                    <td>Update</td>
+                    <td>Delete</td>
+                </tr>
+            </th>
+        </thead>
+        <tbody>
+            {% for seller in sellers %}
+                <tr>
+                    <td>{{ seller.id }}</td>
+                    <td>{{ seller.cnpj }}</td>
+                    <td>{{ seller.company_name }}</td>
+                    <td>{{ seller.bank_name }}</td>
+                    <td>{{ seller.bank_account }}</td>
+                    <td>{{ seller.bank_agency }}</td>
+                    <td><a href="{% url 'sellers' action='update' id=seller.id%}">Update</a></td>
+                    <td><a href="{% url 'sellers' action='delete' id=seller.id %}">Delete</a></td>
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
 {% endblock %}
     
