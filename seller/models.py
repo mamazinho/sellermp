@@ -1,7 +1,10 @@
 from django.db import models
 
 # Create your models here.
+
+
 class Seller(models.Model):
+
     id = models.AutoField(
         primary_key=True
     )
@@ -35,7 +38,9 @@ class Seller(models.Model):
         managed = True
         db_table = 'Seller'
 
+
 class SellerContact(models.Model):
+
     id = models.AutoField(
         primary_key=True
     )
@@ -55,7 +60,7 @@ class SellerContact(models.Model):
     phone_number = models.BigIntegerField(
         default=0
     )
-    
+
     def __str__(self):
         return f'{self.id} - {self.seller} - {self.address} - {self.responsible_email} - {self.phone_number}'
 

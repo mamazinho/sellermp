@@ -2,12 +2,13 @@ from django.shortcuts import render, redirect
 from django.views import View
 from seller.models import Seller as MSeller, SellerContact as MDetail
 
-# Create your views here.
+
 def index(request):
     return render(request, 'base.html')
 
+
 class Seller(View):
-    
+
     def get(self, request, action=None, id=None):
         if action:
             if action == 'new':
@@ -15,13 +16,16 @@ class Seller(View):
             elif action == 'update':
                 seller = MSeller.objects.get(id=id)
                 details = seller.contacts.all()
-                return render(request, 'sellers-form.html', {'seller': seller, 'details': details})
+                return render(
+                    request,
+                    'sellers-form.html',
+                    {'seller': seller, 'details': details}
+                )
             elif action == 'delete':
                 return self.delete(request, id)
 
         sellers = MSeller.objects.all()
         return render(request, 'sellers.html', {'sellers': sellers})
-
 
     def post(self, request, action=None, id=None):
         data = request.POST
@@ -37,7 +41,6 @@ class Seller(View):
             )
 
         return redirect('sellers')
-
 
     def patch(self, request, id=None):
         data = request.POST
@@ -56,14 +59,24 @@ class Seller(View):
         MSeller.objects.get(id=id).delete()
         return redirect('sellers')
 
+
 class Detail(View):
+
     def get(self, request, action, id=None):
         seller_id = request.GET.get('seller_id')
         if action == 'new':
-            return render(request, 'details-form.html', {'seller_id': seller_id})
+            return render(
+                request,
+                'details-form.html',
+                {'seller_id': seller_id}
+            )
         elif action == 'update':
             detail = MDetail.objects.get(id=id)
-            return render(request, 'details-form.html', {'detail': detail, 'seller_id': seller_id})
+            return render(
+                request,
+                'details-form.html',
+                {'detail': detail, 'seller_id': seller_id}
+            )
         elif action == 'delete':
             return self.delete(request, id, seller_id)
 
@@ -81,13 +94,15 @@ class Detail(View):
 
         return redirect('sellers', action='update', id=data.get('seller_id'))
 
-
     def patch(self, request, id=None):
         data = request.POST
         detail = MDetail.objects.get(id=id)
 
         detail.address = data.get('address', detail.address)
-        detail.responsible_email = data.get('responsible_email', detail.responsible_email)
+        detail.responsible_email = data.get(
+            'responsible_email',
+            detail.responsible_email
+        )
         detail.phone_number = data.get('phone_number', detail.phone_number)
 
         detail.save()
