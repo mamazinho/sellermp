@@ -1,6 +1,7 @@
 from django.urls import path, include
-from seller.views import Seller
+from seller.views import Seller, index
 
 urlpatterns = [
-    path('', Seller.as_view()),
+    path('', index),
+    path('seller/', Seller.as_view(), name='sellers'),
 ]

@@ -1,5 +1,6 @@
-# from django.urls import path, include
+from django.urls import path
+from marketplace.views import MarketPlace
 
-# urlpatterns = [
-#     path('', MarketPl),
-# ]
+urlpatterns = [
+    path('', MarketPlace.as_view(), name='marketplace'),
+]
