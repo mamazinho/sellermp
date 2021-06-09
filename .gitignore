@@ -83,6 +83,9 @@ target/
 *.log
 *.pot
 *.pyc
+__pycache__
+sellermp/__pycache__/
 __pycache__/
 local_settings.py
 **/migrations/*
+__pycache__/*

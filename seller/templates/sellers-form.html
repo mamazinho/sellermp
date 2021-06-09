@@ -1,14 +1,61 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
-</head>
-<body>
-    <form action="POST">
+{% extends 'base.html' %}
 
+{% block title %}Sellers Form{% endblock %}
+
+{% block content %}
+
+    <form method="post" id="seller-form">
+        {% csrf_token %}
+        CNPJ: <input
+            type="text"
+            name="cnpj"
+            value="{% if seller and seller.cnpj %}{{seller.cnpj}}{% endif %}"><br />
+        Company Name: <input
+            type="text"
+            name="company_name"
+            value="{% if seller and seller.company_name %}{{seller.company_name}}{% endif %}"><br />
+        Bank Name: <input
+            type="text"
+            name="bank_name"
+            value="{% if seller and seller.bank_name %}{{seller.bank_name}}{% endif %}"><br />
+        Bank Account: <input
+            type="number"
+            name="bank_account"
+            value="{% if seller and seller.bank_account %}{{seller.bank_account}}{% endif %}"><br />
+        Bank Agency: <input
+            type="number"
+            name="bank_agency"
+            value="{% if seller and seller.bank_agency %}{{seller.bank_agency}}{% endif %}"><br />
+
+        <input type="submit" form="seller-form"><br/><br/>
     </form>
-</body>
-</html>
+
+    {% if seller %}
+        <table class="table">
+            <thead>
+                <tr>
+                    <th scope="col">Id</th>
+                    <th scope="col">Address</th>
+                    <th scope="col">Email</th>
+                    <th scope="col">Phone Number</th>
+                    <th scope="col">Update</th>
+                    <th scope="col">Delete</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for detail in details %}
+                <tr>
+                    <td>{{detail.id}}</td>
+                    <td>{{detail.address}}</td>
+                    <td>{{detail.responsible_email}}</td>
+                    <td>{{detail.phone_number}}</td>
+                    <td><a href="{% url 'seller-details' action='update' id=detail.id %}?seller_id={{seller.id}}">Update</a></td>
+                    <td><a href="{% url 'seller-details' action='delete' id=detail.id %}?seller_id={{seller.id}}">Delete</a></td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+        <a href="{% url 'seller-details' action='new' %}?seller_id={{seller.id}}"><button>Add</button></a>
+    {% endif %}
+
+{% endblock %}
