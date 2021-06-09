@@ -5,10 +5,6 @@ from seller.models import Seller as MSeller
 from seller.models import SellerContact as MDetail
 
 
-def index(request):
-    return render(request, "base.html")
-
-
 class Seller(View):
     def get(self, request, action=None, id=None):
         if action:
