@@ -73,42 +73,47 @@ class SellerContactTestCase(TestCase):
 
     def test_get_create_form_template_in_details_api(self):
         response = self.client.get(
-            "/seller-details/new", {"seller_id": self.last_seller.id}
+            "/sellers/seller-details/new", {"seller_id": self.last_seller.id}
         )
         self.assertEqual(response.status_code, 200)
 
     def test_post_create_detail_in_details_api(self):
         response = self.client.post(
-            f"/seller-details/new?seller_id={self.last_seller.id}", self.seller_details
+            f"/sellers/seller-details/new?seller_id={self.last_seller.id}",
+            self.seller_details,
         )
         self.assertEqual(response.status_code, 302)
 
     def test_get_update_form_template_in_details_api(self):
         self.client.post(
-            f"/seller-details/new?seller_id={self.last_seller.id}", self.seller_details
+            f"/sellers/seller-details/new?seller_id={self.last_seller.id}",
+            self.seller_details,
         )
         last_detail = MDetail.objects.last()
         response = self.client.get(
-            f"/seller-details/update/{last_detail.id}?seller_id={self.last_seller.id}",
+            f"/sellers/seller-details/update/{last_detail.id}?seller_id={self.last_seller.id}",
             self.seller_details_update,
         )
         self.assertEqual(response.status_code, 200)
 
     def test_patch_detail_in_details_api(self):
         self.client.post(
-            f"/seller-details/new?seller_id={self.last_seller.id}", self.seller_details
+            f"/sellers/seller-details/new?seller_id={self.last_seller.id}",
+            self.seller_details,
         )
         last_detail = MDetail.objects.last()
         response = self.client.post(
-            f"/seller-details/update/{last_detail.id}", self.seller_details_update
+            f"/sellers/seller-details/update/{last_detail.id}",
+            self.seller_details_update,
         )
         self.assertEqual(response.status_code, 302)
 
     def test_delete_detail_in_details_api(self):
         self.client.post(
-            f"/seller-details/new?seller_id={self.last_seller.id}", self.seller_details
+            f"/sellers/seller-details/new?seller_id={self.last_seller.id}",
+            self.seller_details,
         )
         last_detail = MDetail.objects.last()
         # Test get because front makes this request, reason: unsupported delete in html
-        response = self.client.get(f"/seller-details/delete/{last_detail.id}")
+        response = self.client.get(f"/sellers/seller-details/delete/{last_detail.id}")
         self.assertEqual(response.status_code, 302)
