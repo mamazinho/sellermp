@@ -12,21 +12,21 @@ class Marketplace(View):
     form_market = MarketplaceForm
     template = "marketplace-form.html"
 
-    def get(self, request, action=None, id=None):
+    def get(self, request, action=None, id=None, **kwargs):
         if action and action == "new":
             form = self.form_market
             return render(request, self.template, {"form": form})
 
         if action and action == "update" and id:
-            return self.put(request, id)
+            return self.put(request, id=id)
 
         if action and action == "delete" and id:
-            return self.delete(request, id)
+            return self.delete(request, id=id)
 
         marketplaces = MMarketplace.objects.all()
         return render(request, "marketplace.html", {"marketplaces": marketplaces})
 
-    def post(self, request, action=None, id=None):
+    def post(self, request, action=None, id=None, **kwargs):
         if id:
             data = MMarketplace.objects.get(id=id)
             form = self.form_market(request.POST, instance=data)
@@ -36,7 +36,7 @@ class Marketplace(View):
             form.save()
             return redirect("/marketplaces", id=id)
 
-    def put(self, request, id=None):
+    def put(self, request, action=None, id=None, **kwargs):
         data = MMarketplace.objects.get(id=id)
         try:
             settings = MMarketplaceSettings.objects.all().filter(marketplace=id)
@@ -48,28 +48,28 @@ class Marketplace(View):
             request, self.template, {"form": form, "settings": settings, "id": data.id}
         )
 
-    def delete(self, request, id=None):
+    def delete(self, request, action=None, id=None):
         data = MMarketplace.objects.get(id=id)
         data.delete()
-        return redirect("marketplace")
+        return redirect("/marketplaces")
 
 
 class MarketplaceSettings(View):
     form_settings = MarketplaceSettingsForm
     template = "settings-form.html"
 
-    def get(self, request, action=None, id=None):
+    def get(self, request, action=None, id=None, **kwargs):
         if action and action == "new":
             form = self.form_settings
             return render(request, self.template, {"form": form})
 
         if action and action == "update" and id:
-            return self.put(request, id)
+            return self.put(request, id=id)
 
         if action and action == "delete" and id:
-            return self.delete(request, id)
+            return self.delete(request, id=id)
 
-    def post(self, request, action=None, id=None):
+    def post(self, request, action=None, id=None, **kwargs):
         if id:
             data = MMarketplaceSettings.objects.get(id=id)
             form = self.form_settings(request.POST, instance=data)
@@ -79,12 +79,12 @@ class MarketplaceSettings(View):
             form.save()
             return redirect("/marketplaces")
 
-    def put(self, request, id=None):
+    def put(self, request, action=None, id=None, **kwargs):
         data = MMarketplaceSettings.objects.get(id=id)
         form = self.form_settings(initial=model_to_dict(data))
         return render(request, self.template, {"form": form})
 
-    def delete(self, request, id=None):
+    def delete(self, request, action=None, id=None, **kwargs):
         data = MMarketplaceSettings.objects.get(id=id)
         data.delete()
         return redirect("marketplace")
